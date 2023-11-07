@@ -8,17 +8,14 @@
     "init:dirs": "mkdirp sass css vendor images js",
     "init:files": "touch README.md index.html sass/style.scss js/script.js",
     "init:gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore",
-
     "test": "npm-run-all test:*",
     "test:html": "html-validate *.html",
-
+    "test:eslint": "npx eslint js/*.js",
     "build": "npm-run-all build:* test",
     "build:sass": "sass --style=compressed --no-source-map sass:css",
     "build:autoprefixer": "postcss css/*.css --use autoprefixer -d css",
-
     "build-dev": "npm-run-all build-dev:* build:autoprefixer",
     "build-dev:sass": "sass --style=expanded --source-map sass:css",
-
     "watch": "npm-run-all build build-dev -p watch:*",
     "watch:browsersync": "browser-sync start --server --files \"js/*.js\" \"css/*.css\" \"*.html\"",
     "watch:sassprefixer": "onchange sass/*.scss -- npm run build-dev"
@@ -27,14 +24,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
     "autoprefixer": "^10.2.4",
     "browser-sync": "^2.29.3",
+    "eslint": "^8.53.0",
+    "eslint-config-standard-with-typescript": "^39.1.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.3.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
     "html-validate": "^8.6.0",
     "mkdirp": "^3.0.1",
     "npm-run-all": "^4.1.5",
     "onchange": "^7.1.0",
     "postcss": "^8.2.6",
     "postcss-cli": "^8.3.1",
-    "sass": "^1.69.4"
+    "sass": "^1.69.4",
+    "typescript": "^5.2.2"
   }
 }

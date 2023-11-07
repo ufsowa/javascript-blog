@@ -100,11 +100,20 @@ body {
 }
 
 /* Post */
+.posts {
+  position: relative;
+}
 
 .post {
-  display: none;
+  //display: none;
+  position: absolute;
+  opacity: 0;
   &.active {
-    display: block;
+    //display: block;
+    position: relative;
+    opacity: 1;
+    transition: all 2s;
+    z-index: 1;
   }
 }
 
