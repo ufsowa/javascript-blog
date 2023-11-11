@@ -93,7 +93,7 @@ body {
     display: inline-block;
 
     span {
-      padding: 0 5px;
+      padding: 0 2px;
     }
   }
 }
@@ -136,4 +136,26 @@ body {
   p {
     margin: 0 10px 0 0;
   }
+}
+
+/* Tags */
+
+.tag-size-1 {
+  font-size: 15px;
+}
+
+.tag-size-2 {
+  font-size: 17px;
+}
+
+.tag-size-3 {
+  font-size: 19px;
+}
+
+.tag-size-4 {
+  font-size: 21px;
+}
+
+.tag-size-5 {
+  font-size: 22px;
 }
