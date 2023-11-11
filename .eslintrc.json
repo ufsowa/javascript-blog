@@ -5,8 +5,9 @@
         "node": true
     },
     "extends": [
-    //    "standard-with-typescript",
-        "plugin:react/recommended"
+        "eslint:recommended"
+        //"plugin:react/recommended",
+        //"standard-with-typescript"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -16,5 +17,25 @@
         "react"
     ],
     "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "off"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {"allowTemplateLiterals": true}
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": [
+            "off"
+        ],
+        "no-prototype-builtins": ["off"]
     }
 }
