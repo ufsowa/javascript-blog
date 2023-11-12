@@ -157,6 +157,20 @@
             </div>
           </div>
 
+        <script id="template-list-element-link" type="text/x-handlebars-template">
+          <li><a href="#{{ id }}"><span>{{ content }}</span></a></li>
+        </script>
+        <script id="template-link" type="text/x-handlebars-template">
+          <a href="#{{ id }}"><span>{{ content }}</span></a>
+        </script>
+        <script id="template-list-links" type="text/x-handlebars-template">
+          {{#each list}}
+            <li><a {{#if className}} class="{{ className }}" {{/if}} href="#{{id}}">
+            <span> {{ content }} {{#if ../displayCount}} ({{count}}) {{/if}} </span>
+            </a></li>
+          {{/each}}
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
         <script src="js/script.js"></script>
     </body>
 </html>

@@ -13,6 +13,9 @@
     "plugins": [
         "react"
     ],
+    "globals": {
+        "Handlebars": false
+    },
     "rules": {
         "indent": [
             "error",
