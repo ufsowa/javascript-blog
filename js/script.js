@@ -204,7 +204,8 @@ function generateTags(){
     allTagsData.list.push({
       content: tag,
       count: allTags[tag],
-      className: generateTagClass(allTags[tag],tagsParams)
+      className: generateTagClass(allTags[tag],tagsParams),
+      id: 'tag-' + tag
     });
   }
   console.log(allTagsData);
@@ -241,7 +242,7 @@ function generateAuthors(){
     allAuthorsData.list.push({
       content: author,
       count: allAuthors[author],
-      id: getAuthorId(author)
+      id: 'author-' + getAuthorId(author)
     });
   }
   console.log(allAuthorsData);
