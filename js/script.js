@@ -3,20 +3,32 @@
 /***************************************************/
 /***************  Global variables *****************/
 
-const opt = {
-  
+const opts = {
+  tagSizes: {
+    count: 5,
+    classPrefix: 'tag-size-',
+  },
 };
 
-const optArticleSelector = '.post',
-  optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles',
-  optArticleTagSelector = '.post-tags .list',
-  optTagsListSelector = '.tags.list',
-  optArticleAuthorSelector = '.post-author',
-  optAuthorsListSelector = '.authors.list';
-
-const optCloudClasCount = 5,
-  optCloudClassPrefix = 'tag-size-';
+const select = {
+  all: {
+    articles: '.post',
+    linksTo: {
+      tags: 'a[href^="#tag-"]',
+      authors: 'a[href^="#author-"]',
+    },
+  },
+  article: {
+    title: '.post-title',
+    tags: '.post-tags .list',
+    author: '.post-author',
+  },
+  listOf: {
+    titles: '.titles',
+    tags: '.tags.list',
+    authors: '.authors.list',
+  },
+};
 
 /********************************************/
 /*************  Callback handlers ***********/
@@ -38,10 +50,8 @@ function tagClickHandler(event){
     /* remove class active */
     tagLink.classList.remove('active');
   }/* END LOOP: for each active tag link */
-
   /* find all tag links with "href" attribute equal to the "href" constant */
   const selectedTagLinks = document.querySelectorAll('a[href="'+ href +'"]');
-  //console.log('selected tags: ', selectedTagLinks);
   /* START LOOP: for each found tag link */
   for( let selectedTagLink of selectedTagLinks){
     /* add class active */
@@ -88,7 +98,6 @@ function authorClickHandler(event) {
   const href = clickedElement.getAttribute('href');
   const selectedAuthorId = href.replace('#author-', '');
   const selectedAuthor = selectedAuthorId.replace('-', ' ');
-  //console.log('clicked author: ', selectedAuthor);
   // set links active  
   const authorLinks = document.querySelectorAll('a[href="'+ href +'"]');
   for ( let selectedLink of authorLinks) {
@@ -103,21 +112,20 @@ function authorClickHandler(event) {
 
 function generateTitleLinks(customSelector = ''){
   /* remove contents of titleList */
-  const titleList = document.querySelector(optTitleListSelector);
+  const titleList = document.querySelector(select.listOf.titles);
   titleList.innerHTML = '';
   /* for each article */
   let html = '';
-  const articles = document.querySelectorAll(optArticleSelector + customSelector);
+  const articles = document.querySelectorAll(select.all.articles + customSelector);
   for (let article of articles) {
     /* get the article id */
     const articleId = article.getAttribute('id');
     /* find the title element */
-    const articleElement = article.querySelector(optTitleSelector);
+    const articleElement = article.querySelector(select.article.title);
     /* get the title from the title element */
     const articleTitle = articleElement.innerHTML;
     /* create HTML of the link */
     const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
-    //console.log(linkHTML);
     /* insert link into titleList */
     //titleList.insertAdjacentHTML("beforeend", linkHTML);
     html = html + linkHTML;
@@ -143,21 +151,21 @@ function calculateTagsParams(allTags) {
 
 function generateTagClass(count, params) {
   let lenght = params.max - params.min;
-  let binSize = lenght / (optCloudClasCount - 1);
+  let binSize = lenght / (opts.tagSizes.count - 1);
   let binNumber = Math.floor((count - params.min) / binSize) + 1;
   console.log(count, binSize, binNumber);
   
-  return '"' + optCloudClassPrefix + binNumber + '"';
+  return '"' + opts.tagSizes.classPrefix + binNumber + '"';
 }
 
 function generateTags(){
   let allTags = {};
   /* find all articles */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(select.all.articles);
   /* START LOOP: for every article: */
   for ( let article of articles) {
     /* find tags wrapper */
-    const tagWrapper = article.querySelector(optArticleTagSelector);
+    const tagWrapper = article.querySelector(select.article.tags);
     /* make html variable with empty string */
     let html = '';
     /* get tags from data-tags attribute */
@@ -178,10 +186,9 @@ function generateTags(){
       }
     } /* END LOOP: for each tag */
     /* insert HTML of all the links into the tags wrapper */
-    //console.log('tags:', html);
     tagWrapper.innerHTML = html;
   } /* END LOOP: for every article: */
-  const tagList = document.querySelector(optTagsListSelector);
+  const tagList = document.querySelector(select.listOf.tags);
   console.log(allTags);
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams: ', tagsParams);
@@ -201,9 +208,9 @@ function getAuthorId(name){
 
 function generateAuthors(){
   let allAuthors = {};
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(select.all.articles);
   for( let article of articles ){
-    const authorWrapper = article.querySelector(optArticleAuthorSelector);
+    const authorWrapper = article.querySelector(select.article.author);
     const author = article.getAttribute('data-author');
     const authorId = getAuthorId(author);
     let html = '<a href="#author-' + authorId + '"><span> by '+ author +'</span></a>';
@@ -214,7 +221,7 @@ function generateAuthors(){
       allAuthors[author]++;
     }
   }
-  const authorsList = document.querySelector(optAuthorsListSelector);
+  const authorsList = document.querySelector(select.listOf.authors);
   let allAuthorsHTML = '';
   console.log(allAuthors);
   for ( let author in allAuthors) {
@@ -228,11 +235,10 @@ function generateAuthors(){
 function addClickListenersToTags(){
   /* find all links to tags */
   const tagLinks = document.querySelectorAll('a[href^="#tag-"]');
-  /* START LOOP: for each link */
   for ( let tagLink of tagLinks ) {
     /* add tagClickHandler as event listener for that link */
     tagLink.addEventListener('click', tagClickHandler);
-  }/* END LOOP: for each link */
+  }
 }
 
 function addClickListenersToAuthors(){
