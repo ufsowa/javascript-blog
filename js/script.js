@@ -3,6 +3,10 @@
 /***************************************************/
 /***************  Global variables *****************/
 
+const opt = {
+  
+};
+
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
