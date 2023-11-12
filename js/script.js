@@ -243,9 +243,6 @@ function generateAuthors(){
       count: allAuthors[author],
       id: getAuthorId(author)
     });
-    // let htmlLink = '<li><a href=#author-' + getAuthorId(author) + '><span>' + author + '  (' + allAuthors[author] + ')'+
-    //                 '</span></a></li>';
-    //allAuthorsHTML += htmlLink;
   }
   console.log(allAuthorsData);
   const allAuthorsHTML = templates.tplListLinks(allAuthorsData); 
